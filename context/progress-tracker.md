@@ -4,14 +4,11 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Phase
 
-- Foundation — Design system setup (complete)
+- Editor Chrome — navbar and project sidebar shell (complete)
 
 ## Current Goal
 
-- Install and configure shadcn/ui with dark theme tokens
-- Add primitive components: Button, Card, Dialog, Input, Tabs, Textarea, ScrollArea
-- Install lucide-react
-- Create lib/utils.ts with cn() helper
+- Editor chrome components integrated into root layout
 
 ## Completed
 
@@ -22,7 +19,13 @@ Update this file whenever the current phase, active feature, or implementation s
 - Installed lucide-react, clsx, tailwind-merge
 - Created lib/utils.ts with cn() helper
 - Added components: Button, Card, Dialog, Input, Tabs, Textarea, ScrollArea
-- All components compile without errors
+- Dialog pattern ready: title via DialogTitle, description via DialogDescription, footer via DialogFooter
+- Created `components/editor/editor-navbar.tsx` — fixed-height top navbar with sidebar toggle, left/center/right sections, dark elevated background
+- Created `components/editor/project-sidebar.tsx` — fixed-position sidebar that slides from left, with Projects/Shared tabs and New Project button
+- Created `components/editor/editor-shell.tsx` — client component managing sidebar state, composing navbar + sidebar
+- Updated `app/layout.tsx` — imports EditorShell, wraps children with editor chrome
+- Updated `app/page.tsx` — cleaned up to match editor context
+- Build verified: no TS or compilation errors, lint passes
 
 ## In Progress
 
