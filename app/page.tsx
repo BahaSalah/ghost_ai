@@ -1,7 +1,10 @@
-export default function Home() {
-  return (
-    <div className="flex h-full items-center justify-center">
-      <h1 className="text-4xl font-bold">ghoast ai</h1>
-    </div>
-  );
+import { currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
+
+export default async function Home() {
+  const user = await currentUser();
+  if (user) {
+    redirect("/editor");
+  }
+  redirect("/sign-in");
 }
