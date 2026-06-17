@@ -15,8 +15,8 @@ Update this file whenever the current phase, active feature, or implementation s
 - Clerk authentication set up via Clerk CLI (app: Ghost AI, app_3FDu0MU9Q2Tt94lX7IrsC9FlLBK)
 - @clerk/nextjs installed, ClerkProvider wrapped in layout.tsx
 - proxy.ts created with clerkMiddleware, matcher includes `'/__clerk/:path*'`
-- Sign-in (app/sign-in/[[...sign-in]]/page.tsx) and sign-up (app/sign-up/[[...sign-up]]/page.tsx) pages created
-- Clerk auth controls (SignInButton, SignUpButton, UserButton) added to EditorNavbar
+- Sign-in (app/(auth)/sign-in/[[...sign-in]]/page.tsx) and sign-up (app/(auth)/sign-up/[[...sign-up]]/page.tsx) pages created
+- Clerk auth controls (UserButton) added to EditorNavbar
 - clerk doctor: all checks pass
 - Stripped Next.js boilerplate (globals.css, page.tsx, public SVGs)
 - shadcn/ui initialized with base-nova preset (base-ui/react)
@@ -39,10 +39,18 @@ Update this file whenever the current phase, active feature, or implementation s
 - EditorNavbar simplified to show only UserButton (editor is protected anyway)
 - proxy.ts protects all routes except /sign-in and /sign-up
 - `@clerk/ui` already installed (v1.17.0)
+- `hooks/use-project-dialogs.tsx` — context-based hook managing dialog state, form state (create name, rename name, slug generation), and loading state
+- `components/editor/create-project-dialog.tsx` — name input + live slug preview
+- `components/editor/rename-project-dialog.tsx` — prefilled input, description shows current name, auto-focus, Enter submits
+- `components/editor/delete-project-dialog.tsx` — destructive confirmation dialog
+- `components/editor/editor-shell.tsx` — wired ProjectDialogProvider, renders all three dialogs
+- `components/editor/project-sidebar.tsx` — mock project list, rename/delete actions (owned only), New Project button wired, mobile backdrop scrim
+- `app/(editor)/editor/page.tsx` — editor home with heading, description, New Project button
+- Build verified: zero TS errors, zero lint errors
 
 ## In Progress
 
-- None.
+- Project Dialogs & Editor Home (04-project-dialogs.md) ✓
 
 ## Next Up
 
