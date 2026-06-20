@@ -56,6 +56,14 @@ Update this file whenever the current phase, active feature, or implementation s
 
 - TBD — next feature unit
 
+## Completed (continued)
+
+- Prisma schema and data layer (05-prisma.md) ✓
+  - `prisma/models/project.prisma` — Project and ProjectCollaborator models with proper relations, indexes, unique constraints, and enums
+  - `lib/prisma.ts` — cached PrismaClient singleton with DATABASE_URL branching (Accelerate vs direct pg adapter)
+  - Initial migration created and applied — both tables created with all indexes and foreign keys
+  - Build & lint verified: zero errors
+
 ## Open Questions
 
 
