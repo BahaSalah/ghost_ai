@@ -12,7 +12,8 @@ import { Button } from "@/components/ui/button"
 import { useProjectDialogs } from "@/hooks/use-project-dialogs"
 
 export function DeleteProjectDialog() {
-  const { isDeleteOpen, closeDialog, selectedProject } = useProjectDialogs()
+  const { isDeleteOpen, closeDialog, selectedProject, isLoading, handleDelete } =
+    useProjectDialogs()
 
   return (
     <Dialog open={isDeleteOpen} onOpenChange={(open) => !open && closeDialog()}>
@@ -26,10 +27,12 @@ export function DeleteProjectDialog() {
         </DialogHeader>
 
         <DialogFooter>
-          <Button variant="outline" onClick={closeDialog}>
+          <Button variant="outline" onClick={closeDialog} disabled={isLoading}>
             Cancel
           </Button>
-          <Button variant="destructive">Delete</Button>
+          <Button variant="destructive" onClick={handleDelete} disabled={isLoading}>
+            {isLoading ? "Deleting..." : "Delete"}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

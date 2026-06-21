@@ -1,9 +1,14 @@
-import { EditorShell } from "@/components/editor/editor-shell";
+import { auth } from "@clerk/nextjs/server"
+import { getUserProjects } from "@/lib/project-data"
+import { EditorShell } from "@/components/editor/editor-shell"
 
-export default function EditorLayout({
+export default async function EditorLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
-  return <EditorShell>{children}</EditorShell>;
+  const { userId } = await auth()
+  const initialProjects = userId ? await getUserProjects(userId) : { owned: [], shared: [] }
+
+  return <EditorShell initialProjects={initialProjects}>{children}</EditorShell>
 }

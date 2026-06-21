@@ -13,8 +13,14 @@ import { Input } from "@/components/ui/input"
 import { useProjectDialogs } from "@/hooks/use-project-dialogs"
 
 export function CreateProjectDialog() {
-  const { isCreateOpen, closeDialog, createName, setCreateName, slug } =
+  const { isCreateOpen, closeDialog, createName, setCreateName, slug, isLoading, handleCreate } =
     useProjectDialogs()
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && createName.trim()) {
+      handleCreate()
+    }
+  }
 
   return (
     <Dialog open={isCreateOpen} onOpenChange={(open) => !open && closeDialog()}>
@@ -32,13 +38,14 @@ export function CreateProjectDialog() {
             <Input
               value={createName}
               onChange={(e) => setCreateName(e.target.value)}
+              onKeyDown={handleKeyDown}
               placeholder="My Project"
               autoFocus
             />
           </div>
           {slug && (
             <div className="space-y-1">
-              <span className="text-xs text-[var(--text-muted)]">Slug</span>
+              <span className="text-xs text-[var(--text-muted)]">Room ID preview</span>
               <div className="rounded-md border border-[var(--border-default)] bg-[var(--bg-muted)] px-2.5 py-1.5 font-mono text-xs text-[var(--text-secondary)]">
                 {slug}
               </div>
@@ -47,10 +54,12 @@ export function CreateProjectDialog() {
         </div>
 
         <DialogFooter>
-          <Button variant="outline" onClick={closeDialog}>
+          <Button variant="outline" onClick={closeDialog} disabled={isLoading}>
             Cancel
           </Button>
-          <Button>Create</Button>
+          <Button onClick={handleCreate} disabled={!createName.trim() || isLoading}>
+            {isLoading ? "Creating..." : "Create"}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
