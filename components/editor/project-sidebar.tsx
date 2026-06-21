@@ -3,8 +3,8 @@
 import { X, Plus, Pencil, Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
-import { useProjectDialogs, MOCK_PROJECTS } from "@/hooks/use-project-dialogs"
-import type { Project } from "@/hooks/use-project-dialogs"
+import { useProjectDialogs } from "@/hooks/use-project-dialogs"
+import type { ProjectItem } from "@/lib/project-data"
 
 interface ProjectSidebarProps {
   isOpen: boolean
@@ -16,9 +16,9 @@ function ProjectItem({
   onRename,
   onDelete,
 }: {
-  project: Project
-  onRename: (p: Project) => void
-  onDelete: (p: Project) => void
+  project: ProjectItem
+  onRename: (p: ProjectItem) => void
+  onDelete: (p: ProjectItem) => void
 }) {
   const isOwner = project.role === "owner"
 
@@ -52,10 +52,8 @@ function ProjectItem({
 }
 
 export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
-  const { openCreate, openRename, openDelete } = useProjectDialogs()
-
-  const myProjects = MOCK_PROJECTS.filter((p) => p.role === "owner")
-  const sharedProjects = MOCK_PROJECTS.filter((p) => p.role === "collaborator")
+  const { ownedProjects, sharedProjects, openCreate, openRename, openDelete } =
+    useProjectDialogs()
 
   return (
     <>
@@ -83,13 +81,13 @@ export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
               <TabsTrigger value="shared" className="flex-1">Shared</TabsTrigger>
             </TabsList>
             <TabsContent value="my-projects">
-              {myProjects.length === 0 ? (
+              {ownedProjects.length === 0 ? (
                 <p className="mt-8 text-center text-sm text-[var(--text-muted)]">
                   No projects yet.
                 </p>
               ) : (
                 <div className="mt-2 space-y-0.5">
-                  {myProjects.map((project) => (
+                  {ownedProjects.map((project) => (
                     <ProjectItem
                       key={project.id}
                       project={project}

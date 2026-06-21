@@ -14,16 +14,16 @@ import { Input } from "@/components/ui/input"
 import { useProjectDialogs } from "@/hooks/use-project-dialogs"
 
 export function RenameProjectDialog() {
-  const { isRenameOpen, closeDialog, selectedProject, renameName, setRenameName } =
+  const { isRenameOpen, closeDialog, selectedProject, renameName, setRenameName, isLoading, handleRename } =
     useProjectDialogs()
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
-      if (e.key === "Enter") {
-        closeDialog()
+      if (e.key === "Enter" && renameName.trim()) {
+        handleRename()
       }
     },
-    [closeDialog]
+    [renameName, handleRename]
   )
 
   return (
@@ -44,10 +44,12 @@ export function RenameProjectDialog() {
         />
 
         <DialogFooter>
-          <Button variant="outline" onClick={closeDialog}>
+          <Button variant="outline" onClick={closeDialog} disabled={isLoading}>
             Cancel
           </Button>
-          <Button>Rename</Button>
+          <Button onClick={handleRename} disabled={!renameName.trim() || isLoading}>
+            {isLoading ? "Renaming..." : "Rename"}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
