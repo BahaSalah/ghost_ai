@@ -4,6 +4,8 @@ import { X, Plus, Pencil, Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { useProjectDialogs } from "@/hooks/use-project-dialogs"
+import { useParams } from "next/navigation"
+import Link from "next/link"
 import type { ProjectItem } from "@/lib/project-data"
 
 interface ProjectSidebarProps {
@@ -15,16 +17,27 @@ function ProjectItem({
   project,
   onRename,
   onDelete,
+  isActive,
 }: {
   project: ProjectItem
   onRename: (p: ProjectItem) => void
   onDelete: (p: ProjectItem) => void
+  isActive: boolean
 }) {
   const isOwner = project.role === "owner"
 
   return (
-    <div className="group flex items-center justify-between rounded-md px-2 py-1.5 hover:bg-[var(--bg-muted)]">
-      <span className="truncate text-sm text-[var(--text-primary)]">
+    <Link
+      href={`/editor/${project.id}`}
+      className={`group flex items-center justify-between rounded-md px-2 py-1.5 ${
+        isActive
+          ? "bg-[var(--accent-primary-dim)]"
+          : "hover:bg-[var(--bg-subtle)]"
+      }`}
+    >
+      <span className={`truncate text-sm ${
+        isActive ? "text-[var(--accent-primary)]" : "text-[var(--text-primary)]"
+      }`}>
         {project.name}
       </span>
       {isOwner && (
@@ -32,7 +45,10 @@ function ProjectItem({
           <Button
             variant="ghost"
             size="icon-xs"
-            onClick={() => onRename(project)}
+            onClick={(e) => {
+              e.preventDefault()
+              onRename(project)
+            }}
             aria-label={`Rename ${project.name}`}
           >
             <Pencil />
@@ -40,20 +56,25 @@ function ProjectItem({
           <Button
             variant="ghost"
             size="icon-xs"
-            onClick={() => onDelete(project)}
+            onClick={(e) => {
+              e.preventDefault()
+              onDelete(project)
+            }}
             aria-label={`Delete ${project.name}`}
           >
             <Trash2 />
           </Button>
         </div>
       )}
-    </div>
+    </Link>
   )
 }
 
 export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
   const { ownedProjects, sharedProjects, openCreate, openRename, openDelete } =
     useProjectDialogs()
+  const params = useParams()
+  const activeRoomId = params?.roomId as string | undefined
 
   return (
     <>
@@ -87,12 +108,13 @@ export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
                 </p>
               ) : (
                 <div className="mt-2 space-y-0.5">
-                  {ownedProjects.map((project) => (
+                    {ownedProjects.map((project) => (
                     <ProjectItem
                       key={project.id}
                       project={project}
                       onRename={openRename}
                       onDelete={openDelete}
+                      isActive={project.id === activeRoomId}
                     />
                   ))}
                 </div>
@@ -105,12 +127,13 @@ export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
                 </p>
               ) : (
                 <div className="mt-2 space-y-0.5">
-                  {sharedProjects.map((project) => (
+                    {sharedProjects.map((project) => (
                     <ProjectItem
                       key={project.id}
                       project={project}
                       onRename={openRename}
                       onDelete={openDelete}
+                      isActive={project.id === activeRoomId}
                     />
                   ))}
                 </div>
