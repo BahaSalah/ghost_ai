@@ -4,11 +4,11 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Phase
 
-- Auth integration (complete)
+- Sharing feature (complete)
 
 ## Current Goal
 
-- Wire editor home — sidebar uses real project data, dialogs call live API, create navigates to workspace
+- Share dialog — workspace sharing with invite, remove, and Clerk-enriched collaborator list
 
 ## Completed
 
@@ -60,14 +60,23 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## In Progress
 
-- (none — next feature unit)
+(none)
 
 ## Next Up
 
-- TBD — next feature unit
+- Real canvas logic, Liveblocks, AI chat
 
 ## Completed (continued)
 
+- Editor workspace shell (08-editor-workspace-shell.md) ✓
+  - `lib/project-access.ts` — `getCurrentIdentity()` and `getProjectForUser()` helpers
+  - `components/editor/access-denied.tsx` — centered layout, lock icon, link back to `/editor`
+  - `components/editor/workspace-context.tsx` — context providing projectName + AI sidebar state to navbar
+  - `components/editor/editor-navbar.tsx` — reads workspace context; shows project name in center, share + AI toggle buttons when in workspace mode
+  - `components/editor/project-sidebar.tsx` — highlights active room via `useParams()`, items link to `/editor/[id]`
+  - `components/editor/workspace-content.tsx` — full-viewport canvas area (dark bg, centered message) + toggleable AI sidebar placeholder
+  - `app/(editor)/editor/[roomId]/page.tsx` — server component: unauthenticated → redirect `/sign-in`, no access → `AccessDenied`, otherwise renders workspace
+- Share dialog (09-share-dialog.md) ✓
 - Prisma schema and data layer (05-prisma.md) ✓
 - Project APIs (06-project-apis.md) ✓
   - `app/api/projects/route.ts` — GET (list), POST (create) with ownerId from Clerk auth
@@ -94,3 +103,4 @@ Update this file whenever the current phase, active feature, or implementation s
 - shadcn init used `--defaults` (base-nova preset with @base-ui/react primitives)
 - Build verified: no TS or compilation errors
 - globals.css imports: tailwindcss, tw-animate-css, shadcn/tailwind.css
+- Share dialog: workspace bridge extended with `projectId`, `projectRole`, `isShareOpen`; Clerk Backend API enriches collaborator emails with display name + avatar
