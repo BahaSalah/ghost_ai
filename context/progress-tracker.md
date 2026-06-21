@@ -4,14 +4,33 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Phase
 
-- Sharing feature (complete)
+- Shape drag-to-create panel (complete)
 
 ## Current Goal
 
-- Share dialog — workspace sharing with invite, remove, and Clerk-enriched collaborator list
+- Add bottom shape panel so users can drag shapes onto the canvas and create new nodes
 
 ## Completed
 
+- Base collaborative canvas (11-base-canvas.md) ✓
+  - `types/canvas.ts` — shared types for CanvasNodeData (label, color, shape), CanvasNode, CanvasEdge
+  - `components/editor/workspace-content.tsx` — replaces placeholder with Liveblocks-backed React Flow canvas
+  - LiveblocksProvider (`/api/liveblocks-auth`) → RoomProvider (roomId from URL params) → ClientSideSuspense (loading state)
+  - CanvasErrorBoundary class component for Liveblocks connection failure fallback
+  - `useErrorListener` for runtime disconnect error state
+  - `useLiveblocksFlow({ suspense: true })` with empty initial nodes/edges
+  - ReactFlow with fitView, colorMode="dark", loose connections
+  - MiniMap (dark styled) + dot-pattern Background + Cursors from @liveblocks/react-flow
+  - AI sidebar preserved and conditionally rendered via workspace bridge
+  - `@xyflow/react` base + style CSS imported in globals.css
+  - Build verified: zero TS errors
+- Liveblocks realtime collaboration setup (10-liveblocks-setup.md) ✓
+  - `liveblocks.config.ts` — defines Presence (cursor, isThinking) and UserMeta (id, name, avatar, color)
+  - `lib/liveblocks.ts` — cached Liveblocks node client singleton, deterministic `getUserColor()` helper mapping user ID to a 16-color palette
+  - `app/api/liveblocks-auth/route.ts` — POST endpoint requiring Clerk auth, verifying project access via `getProjectForUser`, creating room with Liveblocks, issuing access token with user metadata (name, avatar, color)
+  - 403 returned for unauthorized project access, 401 for unauthenticated
+  - `@liveblocks/node` installed
+  - Build verified: zero TS errors, zero lint errors
 - Clerk authentication set up via Clerk CLI (app: Ghost AI, app_3FDu0MU9Q2Tt94lX7IrsC9FlLBK)
 - @clerk/nextjs installed, ClerkProvider wrapped in layout.tsx
 - proxy.ts created with clerkMiddleware, matcher includes `'/__clerk/:path*'`
@@ -64,10 +83,17 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Next Up
 
-- Real canvas logic, Liveblocks, AI chat
+- Shape-specific node visuals, AI chat integration
 
 ## Completed (continued)
 
+- Shape drag-to-create panel (12-shape-panel.md) ✓
+  - `components/editor/shape-panel.tsx` — floating pill-shaped toolbar at bottom-center with draggable shape buttons (rectangle, diamond, circle, pill, cylinder, hexagon)
+  - `components/editor/canvas-node-renderer.tsx` — custom node renderer for `canvasNode` type, renders as bordered rectangle with centered label
+  - `components/editor/workspace-content.tsx` — `nodeTypes` registered on ReactFlow, `onDragOver`/`onDrop` handling on canvas wrapper, `screenToFlowPosition` for coordinate conversion, node ID generation using shape+timestamp+counter
+  - Shape drag payload includes shape name, width, height in `application/json` format
+  - On drop: reads shape payload, converts screen coords to flow coords, creates new node with empty label, default color (`#505068`), and dropped shape
+  - Build verified: zero TS errors
 - Editor workspace shell (08-editor-workspace-shell.md) ✓
   - `lib/project-access.ts` — `getCurrentIdentity()` and `getProjectForUser()` helpers
   - `components/editor/access-denied.tsx` — centered layout, lock icon, link back to `/editor`
@@ -97,6 +123,10 @@ Update this file whenever the current phase, active feature, or implementation s
 
 - Dark-only: shadcn dark theme variables moved to :root, no .dark class dependency
 - Theme tokens defined in globals.css with both raw CSS vars and @theme inline mapping for Tailwind v4
+- Liveblocks auth: `@liveblocks/node` server SDK used for room management and token issuance (access tokens via `prepareSession` + `allow` + `authorize`), room as private (`defaultAccesses: []`) with per-user access granted server-side
+- Cursor colors: deterministic mapping from user ID hash to 16-color fixed palette, generated server-side during auth
+- Collaborative canvas: `useLiveblocksFlow` manages Shared Storage (LiveMap-based nodes/edges) and provides React Flow change handlers; `Cursors` component uses Presence for multiplayer cursor display
+- Error handling: `CanvasErrorBoundary` (class component wrapping Liveblocks tree) for Suspense/initialization errors, `useErrorListener` hook for runtime disconnect handling inside the room
 
 ## Session Notes
 
@@ -104,3 +134,4 @@ Update this file whenever the current phase, active feature, or implementation s
 - Build verified: no TS or compilation errors
 - globals.css imports: tailwindcss, tw-animate-css, shadcn/tailwind.css
 - Share dialog: workspace bridge extended with `projectId`, `projectRole`, `isShareOpen`; Clerk Backend API enriches collaborator emails with display name + avatar
+- Liveblocks implementation uses `@liveblocks/node` (installed separately from frontend Liveblocks packages) for server-side room and token operations
