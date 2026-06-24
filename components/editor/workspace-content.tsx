@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useCallback, useMemo, useRef } from "react"
+import React, { useState, useCallback, useMemo, useRef, useEffect } from "react"
 import { useParams } from "next/navigation"
 import {
   LiveblocksProvider,
@@ -11,8 +11,9 @@ import {
   useRedo,
   useCanUndo,
   useCanRedo,
+  useMyPresence,
 } from "@liveblocks/react"
-import { useLiveblocksFlow, Cursors } from "@liveblocks/react-flow"
+import { useLiveblocksFlow } from "@liveblocks/react-flow"
 import { ReactFlow, MiniMap, Background, BackgroundVariant } from "@xyflow/react"
 import { useWorkspaceBridge } from "./workspace-context"
 import { CanvasNodeRenderer } from "./canvas-node-renderer"
@@ -20,7 +21,11 @@ import { CanvasEdgeRenderer } from "./canvas-edge-renderer"
 import { ShapePanel } from "./shape-panel"
 import { CanvasControlBar } from "./canvas-control-bar"
 import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts"
+import { useCanvasAutosave } from "@/hooks/use-canvas-autosave"
 import { StarterTemplatesModal } from "./starter-templates-modal"
+import { CollaboratorAvatars } from "./collaborator-avatars"
+import { LiveCursors } from "./live-cursors"
+import { AiSidebar } from "./ai-sidebar"
 import type { CanvasTemplate } from "./starter-templates"
 import type { CanvasNode, CanvasEdge } from "@/types/canvas"
 import type { ReactFlowInstance } from "@xyflow/react"
@@ -42,7 +47,7 @@ class CanvasErrorBoundary extends React.Component<
 }
 
 function CanvasInner() {
-  const { isAiOpen, isTemplatesOpen, setTemplatesOpen } = useWorkspaceBridge()
+  const { isTemplatesOpen, setTemplatesOpen, projectId, setSaveStatus } = useWorkspaceBridge()
   const [error, setError] = useState<string | null>(null)
 
   useErrorListener(
@@ -70,6 +75,57 @@ function CanvasInner() {
       edges: { initial: [] },
     })
 
+  useCanvasAutosave({
+    projectId: projectId ?? "",
+    nodes,
+    edges,
+    setSaveStatus,
+  })
+
+  const [loadAttempted, setLoadAttempted] = useState(false)
+
+  useEffect(() => {
+    if (!projectId || loadAttempted) return
+
+    const roomHasContent = nodes.length > 0 || edges.length > 0
+    if (roomHasContent) {
+      setLoadAttempted(true)
+      return
+    }
+
+    const loadCanvas = async () => {
+      try {
+        const res = await fetch(`/api/projects/${projectId}/canvas`)
+        if (!res.ok) {
+          setLoadAttempted(true)
+          return
+        }
+        const data = await res.json()
+
+        const savedNodes: CanvasNode[] = data.nodes ?? []
+        const savedEdges: CanvasEdge[] = data.edges ?? []
+
+        if (savedNodes.length === 0 && savedEdges.length === 0) {
+          setLoadAttempted(true)
+          return
+        }
+
+        onNodesChange(
+          savedNodes.map((n) => ({ type: "add" as const, item: n })),
+        )
+        onEdgesChange(
+          savedEdges.map((e) => ({ type: "add" as const, item: e })),
+        )
+      } catch {
+        console.error("Failed to load saved canvas")
+      } finally {
+        setLoadAttempted(true)
+      }
+    }
+
+    loadCanvas()
+  }, [projectId, nodes, edges, onNodesChange, onEdgesChange, loadAttempted])
+
   const undo = useUndo()
   const redo = useRedo()
   const canUndo = useCanUndo()
@@ -86,6 +142,19 @@ function CanvasInner() {
   const handleFitView = useCallback(() => {
     reactFlowInstanceRef.current?.fitView({ duration: 200 })
   }, [])
+
+  const [, updateMyPresence] = useMyPresence()
+
+  const handleMouseMove = useCallback(
+    (event: React.MouseEvent) => {
+      updateMyPresence({ cursor: { x: event.clientX, y: event.clientY } })
+    },
+    [updateMyPresence],
+  )
+
+  const handleMouseLeave = useCallback(() => {
+    updateMyPresence({ cursor: null })
+  }, [updateMyPresence])
 
   useKeyboardShortcuts(reactFlowInstanceRef, undo, redo)
 
@@ -168,7 +237,7 @@ function CanvasInner() {
   }
 
   return (
-    <div className="flex flex-1">
+    <div className="relative flex flex-1">
       <div
         className="relative flex flex-1"
         onDragOver={onDragOver}
@@ -183,6 +252,8 @@ function CanvasInner() {
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
           onDelete={onDelete}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
           onInit={(instance) => {
             reactFlowInstanceRef.current = instance
           }}
@@ -206,7 +277,6 @@ function CanvasInner() {
             nodeColor="#18181c"
             maskColor="rgba(0,0,0,0.7)"
           />
-          <Cursors />
         </ReactFlow>
         <ShapePanel />
         <CanvasControlBar
@@ -219,20 +289,13 @@ function CanvasInner() {
           canRedo={canRedo}
         />
       </div>
-      {isAiOpen && (
-        <aside className="flex w-80 flex-col border-l border-[var(--border-default)] bg-[var(--bg-elevated)]">
-          <div className="flex items-center border-b border-[var(--border-default)] px-4 py-3">
-            <h2 className="text-sm font-semibold text-[var(--text-primary)]">
-              AI Assistant
-            </h2>
-          </div>
-          <div className="flex flex-1 items-center justify-center p-4">
-            <p className="text-center text-sm text-[var(--text-faint)]">
-              AI chat will appear here
-            </p>
-          </div>
-        </aside>
-      )}
+      <AiSidebar />
+
+      <div className="absolute right-4 top-3 z-50 flex items-center gap-2">
+        <CollaboratorAvatars />
+      </div>
+
+      <LiveCursors />
 
       <StarterTemplatesModal
         open={isTemplatesOpen}

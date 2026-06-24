@@ -1,6 +1,7 @@
 "use client"
 
 import { createContext, useContext } from "react"
+import type { SaveStatus } from "@/hooks/use-canvas-autosave"
 
 interface WorkspaceBridgeValue {
   projectId: string | null
@@ -9,12 +10,14 @@ interface WorkspaceBridgeValue {
   isAiOpen: boolean
   isShareOpen: boolean
   isTemplatesOpen: boolean
+  saveStatus: SaveStatus
   setProjectId: (id: string | null) => void
   setProjectName: (name: string | null) => void
   setProjectRole: (role: "owner" | "collaborator" | null) => void
   setAiOpen: (open: boolean) => void
   setShareOpen: (open: boolean) => void
   setTemplatesOpen: (open: boolean) => void
+  setSaveStatus: (status: SaveStatus) => void
 }
 
 const WorkspaceBridgeContext = createContext<WorkspaceBridgeValue | null>(null)

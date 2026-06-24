@@ -9,7 +9,7 @@ model Project {
   name           String
   description    String?
   status         ProjectStatus @default(DRAFT)
-  canvasJsonPath String?
+  canvasBlobUrl String? @map("canvasJsonPath")
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
 
