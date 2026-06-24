@@ -1,6 +1,6 @@
 "use client"
 
-import { PanelLeftOpen, PanelLeftClose, Share2, Bot } from "lucide-react"
+import { PanelLeftOpen, PanelLeftClose, Share2, Bot, LayoutTemplate } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { UserButton } from "@clerk/nextjs"
 import { useOptionalWorkspace } from "./workspace-context"
@@ -16,6 +16,7 @@ export function EditorNavbar({ isSidebarOpen, onToggleSidebar }: EditorNavbarPro
   const isAiOpen = workspace?.isAiOpen ?? false
   const setAiOpen = workspace?.setAiOpen
   const setShareOpen = workspace?.setShareOpen
+  const setTemplatesOpen = workspace?.setTemplatesOpen
 
   return (
     <nav className="flex h-12 items-center border-b border-[var(--border-default)] bg-[var(--bg-elevated)] px-4">
@@ -39,6 +40,14 @@ export function EditorNavbar({ isSidebarOpen, onToggleSidebar }: EditorNavbarPro
       <div className="flex flex-1 items-center justify-end gap-1">
         {projectName && (
           <>
+            <Button
+              variant="ghost"
+              size="icon"
+              aria-label="Starter templates"
+              onClick={() => setTemplatesOpen?.(true)}
+            >
+              <LayoutTemplate />
+            </Button>
             <Button
               variant="ghost"
               size="icon"

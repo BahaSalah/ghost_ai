@@ -126,3 +126,12 @@
     @apply font-sans;
   }
 }
+
+.react-flow__node:hover .handle-connect {
+  opacity: 1;
+}
+
+.handle-connect {
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
