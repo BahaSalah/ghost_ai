@@ -4,11 +4,62 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Phase
 
-- Shape drag-to-create panel (complete)
+- (none — ready for next feature)
 
 ## Current Goal
 
-- Add bottom shape panel so users can drag shapes onto the canvas and create new nodes
+- (none — completed starter templates feature)
+
+## In Progress
+
+- (none)
+
+## Completed
+
+- Starter templates (18-starter-templates.md) ✓
+  - `components/editor/starter-templates.ts` — CanvasTemplate type, CANVAS_TEMPLATES array with microservices, CI/CD pipeline, and event-driven system templates
+  - `components/editor/starter-templates-modal.tsx` — dialog with scrollable grid of template cards, lightweight SVG preview (node shapes + edge lines, no React Flow), import button per card
+  - Workspace bridge extended with `isTemplatesOpen`/`setTemplatesOpen`
+  - Navbar: LayoutTemplate button opens the starter templates modal
+  - Import handler: clears existing nodes/edges, adds template nodes/edges with prefixed IDs, fits view after 50ms delay
+  - Build verified: zero TS errors
+
+## Completed
+
+- Canvas ergonomics (17-canvas-ergonomics.md) ✓
+  - `components/editor/canvas-control-bar.tsx` — pill-shaped control bar at bottom-left (above shape panel) with zoom group (zoom out, fit view, zoom in) and history group (undo, redo), separated by a thin divider
+  - Zoom controls wired to `reactFlowInstance.zoomIn/zoomOut/fitView` with 200ms animation duration
+  - Undo/redo wired to Liveblocks (`useUndo`, `useRedo`, `useCanUndo`, `useCanRedo`)
+  - Disabled undo/redo buttons visually dimmed via `disabled:opacity-30`
+  - `hooks/use-keyboard-shortcuts.ts` — listens on `window`, ignores shortcuts in inputs/textareas/contenteditable
+  - Shortcuts: `+`/`=` zoom in, `-` zoom out, `Cmd/Ctrl+Z` undo, `Cmd/Ctrl+Shift+Z` or `Cmd/Ctrl+Y` redo
+  - Build verified: zero TS errors
+
+- Edge behavior (16-edge-behavior.md) ✓
+  - CanvasEdgeData type extended with optional `label` field
+  - Handle CSS in globals.css: hidden by default (opacity: 0), fade in on node hover via `.react-flow__node:hover .handle-connect`
+  - NodeHandles component: 8 handles (source + target at each of top/right/bottom/left), 8px white dots with dark border
+  - CanvasEdgeRenderer: smooth-step path, dimmed at rest (opacity 0.35), bright on hover/select, 20px invisible hit area
+  - Arrow rendered as polygon at path endpoint based on targetPosition
+  - Inline labels via EdgeLabelRenderer: double-click to edit, blur/Enter/Escape to save, pill badge display, faint hint on active no-label edges
+  - Label input styled with growing width, stops drag/pan propagation
+  - defaultEdgeOptions set to type "canvasEdge" with matching dimmed style
+  - Build verified: zero TS errors
+
+- Node color toolbar (15-node-color-toolbar.md) ✓
+  - NodeResizer on selected nodes with min size constraints
+  - Inline label editing with textarea overlay
+  - Double-click to edit, blur/Escape to close
+  - Label updates synced via Liveblocks onNodesChange
+  - Build verified: zero TS errors
+
+- Node shape rendering and drag preview (13-node-shape.md) ✓
+  - CSS shapes: rectangle, pill, circle
+  - SVG shapes: diamond, hexagon, cylinder
+  - Borders subtle at rest, brighter when selected
+  - Drag ghost preview attached to cursor
+  - Fixed node connections: Handle components as siblings, explicit handle sizing
+  - Build verified: zero TS errors
 
 ## Completed
 
@@ -76,14 +127,6 @@ Update this file whenever the current phase, active feature, or implementation s
   - `app/(editor)/editor/page.tsx` — server component fetching own project counts
   - `app/api/projects/route.ts` — POST accepts optional `id` for project/room alignment
   - Build verified: zero TS errors, zero lint errors
-
-## In Progress
-
-(none)
-
-## Next Up
-
-- Shape-specific node visuals, AI chat integration
 
 ## Completed (continued)
 

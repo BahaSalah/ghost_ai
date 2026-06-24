@@ -8,11 +8,13 @@ interface WorkspaceBridgeValue {
   projectRole: "owner" | "collaborator" | null
   isAiOpen: boolean
   isShareOpen: boolean
+  isTemplatesOpen: boolean
   setProjectId: (id: string | null) => void
   setProjectName: (name: string | null) => void
   setProjectRole: (role: "owner" | "collaborator" | null) => void
   setAiOpen: (open: boolean) => void
   setShareOpen: (open: boolean) => void
+  setTemplatesOpen: (open: boolean) => void
 }
 
 const WorkspaceBridgeContext = createContext<WorkspaceBridgeValue | null>(null)

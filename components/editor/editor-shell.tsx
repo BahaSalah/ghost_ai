@@ -25,10 +25,11 @@ export function EditorShell({
   const [projectRole, setProjectRole] = useState<"owner" | "collaborator" | null>(null)
   const [isAiOpen, setAiOpen] = useState(false)
   const [isShareOpen, setShareOpen] = useState(false)
+  const [isTemplatesOpen, setTemplatesOpen] = useState(false)
   const actions = useProjectActions(initialProjects)
 
   return (
-    <WorkspaceBridgeProvider value={{ projectId, projectName, projectRole, isAiOpen, isShareOpen, setProjectId, setProjectName, setProjectRole, setAiOpen, setShareOpen }}>
+    <WorkspaceBridgeProvider value={{ projectId, projectName, projectRole, isAiOpen, isShareOpen, isTemplatesOpen, setProjectId, setProjectName, setProjectRole, setAiOpen, setShareOpen, setTemplatesOpen }}>
       <ProjectDialogProvider value={actions}>
         <div className="flex min-h-screen flex-col">
           <EditorNavbar

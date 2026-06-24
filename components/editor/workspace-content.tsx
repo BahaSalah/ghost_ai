@@ -7,12 +7,21 @@ import {
   RoomProvider,
   ClientSideSuspense,
   useErrorListener,
+  useUndo,
+  useRedo,
+  useCanUndo,
+  useCanRedo,
 } from "@liveblocks/react"
 import { useLiveblocksFlow, Cursors } from "@liveblocks/react-flow"
 import { ReactFlow, MiniMap, Background, BackgroundVariant } from "@xyflow/react"
 import { useWorkspaceBridge } from "./workspace-context"
 import { CanvasNodeRenderer } from "./canvas-node-renderer"
+import { CanvasEdgeRenderer } from "./canvas-edge-renderer"
 import { ShapePanel } from "./shape-panel"
+import { CanvasControlBar } from "./canvas-control-bar"
+import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts"
+import { StarterTemplatesModal } from "./starter-templates-modal"
+import type { CanvasTemplate } from "./starter-templates"
 import type { CanvasNode, CanvasEdge } from "@/types/canvas"
 import type { ReactFlowInstance } from "@xyflow/react"
 
@@ -33,7 +42,7 @@ class CanvasErrorBoundary extends React.Component<
 }
 
 function CanvasInner() {
-  const { isAiOpen } = useWorkspaceBridge()
+  const { isAiOpen, isTemplatesOpen, setTemplatesOpen } = useWorkspaceBridge()
   const [error, setError] = useState<string | null>(null)
 
   useErrorListener(
@@ -45,6 +54,7 @@ function CanvasInner() {
   const reactFlowInstanceRef = useRef<ReactFlowInstance<CanvasNode, CanvasEdge> | null>(null)
 
   const nodeTypes = useMemo(() => ({ canvasNode: CanvasNodeRenderer }), [])
+  const edgeTypes = useMemo(() => ({ canvasEdge: CanvasEdgeRenderer }), [])
 
   const nodeCounterRef = useRef(0)
   const generateNodeId = useCallback((shape: string): string => {
@@ -59,6 +69,25 @@ function CanvasInner() {
       nodes: { initial: [] },
       edges: { initial: [] },
     })
+
+  const undo = useUndo()
+  const redo = useRedo()
+  const canUndo = useCanUndo()
+  const canRedo = useCanRedo()
+
+  const handleZoomIn = useCallback(() => {
+    reactFlowInstanceRef.current?.zoomIn({ duration: 200 })
+  }, [])
+
+  const handleZoomOut = useCallback(() => {
+    reactFlowInstanceRef.current?.zoomOut({ duration: 200 })
+  }, [])
+
+  const handleFitView = useCallback(() => {
+    reactFlowInstanceRef.current?.fitView({ duration: 200 })
+  }, [])
+
+  useKeyboardShortcuts(reactFlowInstanceRef, undo, redo)
 
   const onDragOver = useCallback((event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault()
@@ -90,7 +119,7 @@ function CanvasInner() {
         position,
         data: {
           label: "",
-          color: "#505068",
+          color: "#1F1F1F",
           shape,
         },
         width,
@@ -99,6 +128,34 @@ function CanvasInner() {
       onNodesChange([{ type: "add", item: newNode }])
     },
     [onNodesChange, generateNodeId],
+  )
+
+  const handleImportTemplate = useCallback(
+    (template: CanvasTemplate) => {
+      const removeNodes = nodes.map((n) => ({ type: "remove" as const, id: n.id }))
+      const removeEdges = edges.map((e) => ({ type: "remove" as const, id: e.id }))
+      const addNodes = template.nodes.map((n) => ({
+        type: "add" as const,
+        item: { ...n, id: `${template.id}-${n.id}` },
+      }))
+      const addEdges = template.edges.map((e) => ({
+        type: "add" as const,
+        item: {
+          ...e,
+          id: `${template.id}-${e.id}`,
+          source: `${template.id}-${e.source}`,
+          target: `${template.id}-${e.target}`,
+        },
+      }))
+
+      onNodesChange([...removeNodes, ...addNodes])
+      onEdgesChange([...removeEdges, ...addEdges])
+
+      setTimeout(() => {
+        reactFlowInstanceRef.current?.fitView({ duration: 200 })
+      }, 50)
+    },
+    [nodes, edges, onNodesChange, onEdgesChange],
   )
 
   if (error) {
@@ -121,6 +178,7 @@ function CanvasInner() {
           nodes={nodes}
           edges={edges}
           nodeTypes={nodeTypes}
+          edgeTypes={edgeTypes}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
@@ -130,7 +188,8 @@ function CanvasInner() {
           }}
           connectionLineStyle={{ stroke: "#505060", strokeWidth: 2 }}
           defaultEdgeOptions={{
-            style: { stroke: "#505060", strokeWidth: 2 },
+            type: "canvasEdge",
+            style: { stroke: "#f0f0f4", strokeWidth: 1.5, opacity: 0.35 },
           }}
           fitView
           colorMode="dark"
@@ -150,6 +209,15 @@ function CanvasInner() {
           <Cursors />
         </ReactFlow>
         <ShapePanel />
+        <CanvasControlBar
+          onZoomIn={handleZoomIn}
+          onZoomOut={handleZoomOut}
+          onFitView={handleFitView}
+          onUndo={undo}
+          onRedo={redo}
+          canUndo={canUndo}
+          canRedo={canRedo}
+        />
       </div>
       {isAiOpen && (
         <aside className="flex w-80 flex-col border-l border-[var(--border-default)] bg-[var(--bg-elevated)]">
@@ -165,6 +233,12 @@ function CanvasInner() {
           </div>
         </aside>
       )}
+
+      <StarterTemplatesModal
+        open={isTemplatesOpen}
+        onOpenChange={setTemplatesOpen}
+        onImport={handleImportTemplate}
+      />
     </div>
   )
 }
