@@ -8,13 +8,38 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Goal
 
-- (none — completed starter templates feature)
+- (none — completed canvas autosave feature)
 
 ## In Progress
 
 - (none)
 
 ## Completed
+
+- Canvas autosave (21-canvas-autosave.md) ✓
+  - `@vercel/blob` installed
+  - `prisma/models/project.prisma` — renamed `canvasJsonPath` to `canvasBlobUrl` with `@map` for backward compatibility
+  - `app/api/projects/[projectId]/canvas/route.ts` — PUT route uploads canvas JSON to Vercel Blob and stores URL on project record; GET route fetches saved canvas from Vercel Blob using stored URL; both routes support owner and collaborator access
+  - `hooks/use-canvas-autosave.ts` — watches Liveblocks nodes/edges, debounces saves (2s), tracks idle/saving/saved/error status
+  - `components/editor/workspace-content.tsx` — initial canvas load on mount from saved Vercel Blob, skips if room already has nodes/edges (active collaboration), wired autosave hook
+  - `components/editor/workspace-context.tsx` — bridge extended with `saveStatus`/`setSaveStatus`
+  - `components/editor/editor-shell.tsx` — saveStatus state wired through bridge
+  - `components/editor/editor-navbar.tsx` — save status indicator (Saving.../Saved/Save failed) shown next to project name in center area
+  - Build verified: zero TS errors
+
+- Presence avatars and cursors (19-presence-avatars-cursors.md) ✓
+  - `components/editor/collaborator-avatars.tsx` — `useOthers()` + `useUser()` double-safety filter, AvatarGroup stack with up to 5 avatars and +N overflow chip, profile photos with initials fallback, visible avatars only for non-self Clerk users
+  - `components/editor/live-cursors.tsx` — fixed-position SVG pointer with name badge colored from each participant's `info.color`, filters out self via Clerk user ID
+  - `workspace-content.tsx` — replaced built-in `<Cursors>` with `useMyPresence` cursor broadcasting on `onMouseMove`, cursor cleared to `null` on `onMouseLeave`, `CollaboratorAvatars` rendered as absolute overlay at top-right of canvas, `LiveCursors` rendered as fixed overlay
+  - Navbar unchanged (editor home and canvas use same component, presences only appear inside the canvas RoomProvider)
+  - Presence type (`cursor`, `isThinking`) already defined in `liveblocks.config.ts` — no change needed
+  - Build verified: zero TS errors
+
+- AI sidebar shell (20-ai-sidebar-shell.md) ✓
+  - `components/editor/ai-sidebar.tsx` — extracted sidebar component with header (bot icon, "AI Workspace" title, "Collaborate with Ghost AI" subtitle, close button), tabbed layout (AI Architect / Specs), empty state with starter prompt chips, auto-resizing textarea with send button, and demo spec card with file icon/snippet/disabled download
+  - `components/editor/workspace-content.tsx` — replaced inline placeholder aside with `<AiSidebar />`, removed unused `isAiOpen` destructuring
+  - Existing floating slide-in behavior preserved (conditional render controlled by parent via workspace bridge)
+  - Build verified: zero TS errors
 
 - Starter templates (18-starter-templates.md) ✓
   - `components/editor/starter-templates.ts` — CanvasTemplate type, CANVAS_TEMPLATES array with microservices, CI/CD pipeline, and event-driven system templates

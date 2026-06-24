@@ -17,6 +17,25 @@ export function EditorNavbar({ isSidebarOpen, onToggleSidebar }: EditorNavbarPro
   const setAiOpen = workspace?.setAiOpen
   const setShareOpen = workspace?.setShareOpen
   const setTemplatesOpen = workspace?.setTemplatesOpen
+  const saveStatus = workspace?.saveStatus
+
+  const saveLabel =
+    saveStatus === "saving"
+      ? "Saving..."
+      : saveStatus === "saved"
+        ? "Saved"
+        : saveStatus === "error"
+          ? "Save failed"
+          : null
+
+  const saveColor =
+    saveStatus === "saving"
+      ? "var(--text-faint)"
+      : saveStatus === "saved"
+        ? "var(--state-success)"
+        : saveStatus === "error"
+          ? "var(--state-error)"
+          : undefined
 
   return (
     <nav className="flex h-12 items-center border-b border-[var(--border-default)] bg-[var(--bg-elevated)] px-4">
@@ -30,10 +49,18 @@ export function EditorNavbar({ isSidebarOpen, onToggleSidebar }: EditorNavbarPro
           {isSidebarOpen ? <PanelLeftClose /> : <PanelLeftOpen />}
         </Button>
       </div>
-      <div className="flex flex-1 items-center justify-center">
+      <div className="flex flex-1 items-center justify-center gap-2">
         {projectName && (
           <span className="text-sm font-medium text-[var(--text-primary)]">
             {projectName}
+          </span>
+        )}
+        {saveLabel && (
+          <span
+            className="text-xs"
+            style={{ color: saveColor }}
+          >
+            {saveLabel}
           </span>
         )}
       </div>

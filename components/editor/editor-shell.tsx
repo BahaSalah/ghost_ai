@@ -11,6 +11,7 @@ import { ProjectDialogProvider } from "@/hooks/use-project-dialogs"
 import { useProjectActions } from "@/hooks/use-project-actions"
 import { WorkspaceBridgeProvider } from "./workspace-context"
 import type { ProjectItem } from "@/lib/project-data"
+import type { SaveStatus } from "@/hooks/use-canvas-autosave"
 
 export function EditorShell({
   children,
@@ -26,10 +27,11 @@ export function EditorShell({
   const [isAiOpen, setAiOpen] = useState(false)
   const [isShareOpen, setShareOpen] = useState(false)
   const [isTemplatesOpen, setTemplatesOpen] = useState(false)
+  const [saveStatus, setSaveStatus] = useState<SaveStatus>("idle")
   const actions = useProjectActions(initialProjects)
 
   return (
-    <WorkspaceBridgeProvider value={{ projectId, projectName, projectRole, isAiOpen, isShareOpen, isTemplatesOpen, setProjectId, setProjectName, setProjectRole, setAiOpen, setShareOpen, setTemplatesOpen }}>
+    <WorkspaceBridgeProvider value={{ projectId, projectName, projectRole, isAiOpen, isShareOpen, isTemplatesOpen, saveStatus, setProjectId, setProjectName, setProjectRole, setAiOpen, setShareOpen, setTemplatesOpen, setSaveStatus }}>
       <ProjectDialogProvider value={actions}>
         <div className="flex min-h-screen flex-col">
           <EditorNavbar
