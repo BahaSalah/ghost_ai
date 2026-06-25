@@ -1,0 +1,27 @@
+import {
+  task
+} from "../chunk-3O2NIRTJ.mjs";
+import "../chunk-USHNXJ63.mjs";
+import "../chunk-WB4TRREF.mjs";
+import {
+  logger
+} from "../chunk-BOOZZBO4.mjs";
+import "../chunk-IB4V73K4.mjs";
+import {
+  __name,
+  init_esm
+} from "../chunk-244PAGAH.mjs";
+
+// trigger/hello-world.ts
+init_esm();
+var helloWorldTask = task({
+  id: "hello-world",
+  run: /* @__PURE__ */ __name(async (payload) => {
+    logger.log("Hello world task running!", { payload });
+    return { greeting: `Hello, ${payload.message}!` };
+  }, "run")
+});
+export {
+  helloWorldTask
+};
+//# sourceMappingURL=hello-world.mjs.map

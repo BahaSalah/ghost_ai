@@ -1,0 +1,37 @@
+import {
+  task
+} from "../chunk-SU4CDUY7.mjs";
+import "../chunk-USHNXJ63.mjs";
+import "../chunk-WB4TRREF.mjs";
+import {
+  logger
+} from "../chunk-BOOZZBO4.mjs";
+import "../chunk-IB4V73K4.mjs";
+import {
+  __name,
+  init_esm
+} from "../chunk-244PAGAH.mjs";
+
+// trigger/ai-design-generation.ts
+init_esm();
+var aiDesignGeneration = task({
+  id: "ai-design-generation",
+  maxDuration: 600,
+  queue: {
+    concurrencyLimit: 5
+  },
+  run: /* @__PURE__ */ __name(async (payload) => {
+    const { prompt, projectId, roomId, userId } = payload;
+    logger.log("Starting AI design generation", { prompt, projectId, roomId, userId });
+    logger.log("AI design generation complete", { projectId });
+    return {
+      nodes: [],
+      edges: [],
+      summary: `Design generated from prompt: "${prompt}"`
+    };
+  }, "run")
+});
+export {
+  aiDesignGeneration
+};
+//# sourceMappingURL=ai-design-generation.mjs.map

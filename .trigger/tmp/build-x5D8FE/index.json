@@ -1,0 +1,79 @@
+{
+  "configPath": "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/trigger.config.mjs",
+  "customConditions": [
+  ],
+  "initEntryPoint": "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/trigger/init.mjs",
+  "prompts": [
+  ],
+  "queues": [
+  ],
+  "runtime": "node",
+  "runtimeVersion": "20.19.1",
+  "tasks": [
+    {
+      "entryPoint": "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/trigger/ai-design-generation.mjs",
+      "filePath": "trigger/ai-design-generation.ts",
+      "id": "ai-design-generation",
+      "maxDuration": 600,
+      "queue": {
+        "concurrencyLimit": 5
+      },
+      "retry": {
+        "factor": 2,
+        "maxAttempts": 3,
+        "maxTimeoutInMs": 10000,
+        "minTimeoutInMs": 1000,
+        "randomize": true
+      }
+    },
+    {
+      "entryPoint": "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/trigger/ai-spec-generation.mjs",
+      "filePath": "trigger/ai-spec-generation.ts",
+      "id": "ai-spec-generation",
+      "maxDuration": 600,
+      "queue": {
+        "concurrencyLimit": 3
+      },
+      "retry": {
+        "factor": 2,
+        "maxAttempts": 3,
+        "maxTimeoutInMs": 10000,
+        "minTimeoutInMs": 1000,
+        "randomize": true
+      }
+    },
+    {
+      "entryPoint": "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/trigger/design-agent.mjs",
+      "filePath": "trigger/design-agent.ts",
+      "id": "design-agent",
+      "maxDuration": 300,
+      "retry": {
+        "factor": 2,
+        "maxAttempts": 3,
+        "maxTimeoutInMs": 10000,
+        "minTimeoutInMs": 1000,
+        "randomize": true
+      }
+    },
+    {
+      "entryPoint": "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/trigger/hello-world.mjs",
+      "filePath": "trigger/hello-world.ts",
+      "id": "hello-world",
+      "maxDuration": 300,
+      "retry": {
+        "factor": 2,
+        "maxAttempts": 3,
+        "maxTimeoutInMs": 10000,
+        "minTimeoutInMs": 1000,
+        "randomize": true
+      }
+    }
+  ],
+  "timings": {
+    "trigger/ai-design-generation.ts": 1.1872009999999875,
+    "trigger/ai-spec-generation.ts": 0.695053999999999,
+    "trigger/design-agent.ts": 43.767832,
+    "trigger/hello-world.ts": 0.7903630000000135
+  },
+  "workerEntryPoint": "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/node_modules/trigger.dev/dist/esm/entryPoints/dev-run-worker.mjs"
+}

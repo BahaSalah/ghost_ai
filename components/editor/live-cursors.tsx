@@ -2,6 +2,7 @@
 
 import { useOthers } from "@liveblocks/react"
 import { useUser } from "@clerk/nextjs"
+import { Loader2 } from "lucide-react"
 
 export function LiveCursors() {
   const { user } = useUser()
@@ -15,6 +16,7 @@ export function LiveCursors() {
         if (!cursor) return null
         const color = other.info?.color ?? "#fff"
         const name = other.info?.name ?? "Anonymous"
+        const isThinking = other.presence?.isThinking ?? false
 
         return (
           <div
@@ -33,9 +35,10 @@ export function LiveCursors() {
               />
             </svg>
             <span
-              className="absolute left-4 top-0 rounded-md px-1.5 py-0.5 text-[11px] font-medium leading-none whitespace-nowrap"
+              className="absolute left-4 top-0 flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[11px] font-medium leading-none whitespace-nowrap"
               style={{ background: color, color: "#000" }}
             >
+              {isThinking && <Loader2 className="size-2.5 animate-spin shrink-0" />}
               {name}
             </span>
           </div>

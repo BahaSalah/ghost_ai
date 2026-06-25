@@ -13,6 +13,7 @@ import {
   useCanRedo,
   useMyPresence,
 } from "@liveblocks/react"
+import { LiveList, LiveObject } from "@liveblocks/client"
 import { useLiveblocksFlow } from "@liveblocks/react-flow"
 import { ReactFlow, MiniMap, Background, BackgroundVariant } from "@xyflow/react"
 import { useWorkspaceBridge } from "./workspace-context"
@@ -327,6 +328,10 @@ function WorkspaceCanvas() {
         <RoomProvider
           id={roomId}
           initialPresence={{ cursor: null, isThinking: false }}
+          initialStorage={{
+            aiStatusFeed: new LiveList([]),
+            aiChatFeed: new LiveList([]),
+          }}
         >
           <ClientSideSuspense
             fallback={
