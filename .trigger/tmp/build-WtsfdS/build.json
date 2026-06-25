@@ -1,0 +1,167 @@
+{
+  "build": {
+  },
+  "cliPackageVersion": "4.4.6",
+  "config": {
+    "dirs": [
+      "./trigger"
+    ],
+    "project": "proj_piasohzzxwjjokhzlrui"
+  },
+  "configPath": "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-WtsfdS/trigger.config.mjs",
+  "contentHash": "41ac14e607f3f47309f4f6bc83b004a7",
+  "customConditions": [
+  ],
+  "deploy": {
+    "env": {
+    }
+  },
+  "environment": "dev",
+  "externals": [
+    {
+      "name": "utf-8-validate",
+      "version": "6.0.6"
+    },
+    {
+      "name": "bufferutil",
+      "version": "4.1.0"
+    },
+    {
+      "name": "import-in-the-middle",
+      "version": "1.15.0"
+    }
+  ],
+  "files": [
+    {
+      "entry": "trigger/ai-design-generation.ts",
+      "out": "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-WtsfdS/trigger/ai-design-generation.mjs"
+    },
+    {
+      "entry": "trigger/ai-spec-generation.ts",
+      "out": "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-WtsfdS/trigger/ai-spec-generation.mjs"
+    },
+    {
+      "entry": "trigger/design-agent.ts",
+      "out": "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-WtsfdS/trigger/design-agent.mjs"
+    },
+    {
+      "entry": "trigger/generate-spec.ts",
+      "out": "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-WtsfdS/trigger/generate-spec.mjs"
+    },
+    {
+      "entry": "trigger/hello-world.ts",
+      "out": "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-WtsfdS/trigger/hello-world.mjs"
+    }
+  ],
+  "indexWorkerEntryPoint": "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-WtsfdS/node_modules/trigger.dev/dist/esm/entryPoints/dev-index-worker.mjs",
+  "initEntryPoint": "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/trigger/init.mjs",
+  "otelImportHook": {
+    "include": [
+    ]
+  },
+  "outputHashes": {
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/chunk-244PAGAH.mjs": "MKUfkr/RxtE",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/chunk-244PAGAH.mjs.map": "5cjM5D5eV/w",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/chunk-3O2NIRTJ.mjs": "jau+owE7Zyk",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/chunk-3O2NIRTJ.mjs.map": "Fd+wsdJqXUc",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/chunk-3UDJ4GFA.mjs": "Gq28SxwBgWA",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/chunk-3UDJ4GFA.mjs.map": "J/44DoUB+lo",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/chunk-A4FW35LL.mjs": "L4VsdF7yj3o",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/chunk-A4FW35LL.mjs.map": "EhKEr8POYWs",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/chunk-BKQUMGBL.mjs": "1QjSRtkDsIQ",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/chunk-BKQUMGBL.mjs.map": "G9fkUeFSI3g",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/chunk-BOOZZBO4.mjs": "MFgNwaAg6rE",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/chunk-BOOZZBO4.mjs.map": "QqihrPYN8OA",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/chunk-BSH2TD44.mjs": "CZ5PF0JHUs8",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/chunk-BSH2TD44.mjs.map": "s44f3ZLy2qk",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/chunk-IB4V73K4.mjs": "Z5jAUjgrZzo",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/chunk-IB4V73K4.mjs.map": "fhm3KjIkXa0",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/chunk-KSQCY2GL.mjs": "GA2dpSAS0F8",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/chunk-KSQCY2GL.mjs.map": "tuOLJO1zLK4",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/chunk-Q4DP3R4W.mjs": "CNui22f2LH4",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/chunk-Q4DP3R4W.mjs.map": "RaktTLRo7rE",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/chunk-USHNXJ63.mjs": "RkI7ln77K/4",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/chunk-USHNXJ63.mjs.map": "LMPzUuAiOIM",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/chunk-WB4TRREF.mjs": "JDM6sOIPTtQ",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/chunk-WB4TRREF.mjs.map": "lClc2UqpqQw",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/crypto.node-FURLATZW.mjs": "zGJ8Kk+9yxY",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/crypto.node-FURLATZW.mjs.map": "0b4tlwmkM3g",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/esm-3JMIGGOE.mjs": "26nm/p6TwVs",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/esm-3JMIGGOE.mjs.map": "CSvtQ8IwLEk",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/getMachineId-bsd-ICCT6NPV.mjs": "LJHfHsAvj5I",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/getMachineId-bsd-ICCT6NPV.mjs.map": "MEVdITbbMCE",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/getMachineId-darwin-UP5KMLAI.mjs": "ZCtsOQWqqIk",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/getMachineId-darwin-UP5KMLAI.mjs.map": "hd3Uo5mbO8o",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/getMachineId-linux-P4XYM4UK.mjs": "nc6O1EA13f4",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/getMachineId-linux-P4XYM4UK.mjs.map": "LR3Lh4qLcJM",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/getMachineId-unsupported-BPADDXCQ.mjs": "NTJ9Kvti624",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/getMachineId-unsupported-BPADDXCQ.mjs.map": "2eHyOg8TCJ4",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/getMachineId-win-CJOVSEAP.mjs": "E/NYVdqqvSI",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/getMachineId-win-CJOVSEAP.mjs.map": "p2vMLwR5uFk",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/lib-J2FNWTSC.mjs": "+LrscumJBmI",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/lib-J2FNWTSC.mjs.map": "IQ5hKkUp9+M",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/node_modules/trigger.dev/dist/esm/entryPoints/dev-index-worker.mjs": "2LABm/YhAOQ",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/node_modules/trigger.dev/dist/esm/entryPoints/dev-index-worker.mjs.map": "KfF411hPets",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/node_modules/trigger.dev/dist/esm/entryPoints/dev-run-worker.mjs": "FHCeVeTBgpw",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/node_modules/trigger.dev/dist/esm/entryPoints/dev-run-worker.mjs.map": "vwXtss3QBX0",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/s2s-R5MD22EM.mjs": "dWZIrBK2MZ0",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/s2s-R5MD22EM.mjs.map": "m9pZ2T5fXwA",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/token-E4DE7UAK.mjs": "4b/t8/aD824",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/token-E4DE7UAK.mjs.map": "Ork2QtNy8Ls",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/token-util-2P6BM4W2.mjs": "NUgO9O+/TX0",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/token-util-2P6BM4W2.mjs.map": "0b4tlwmkM3g",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/trigger.config.mjs": "aIgd6qeW1nI",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/trigger.config.mjs.map": "N6ANmlnrqHE",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/trigger/ai-design-generation.mjs": "h++Y0wRHdiI",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/trigger/ai-design-generation.mjs.map": "sbHp/nxDuS4",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/trigger/ai-spec-generation.mjs": "GGLeSz1FGUI",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/trigger/ai-spec-generation.mjs.map": "zf7GX0Rasnk",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/trigger/design-agent.mjs": "hEX/AsBC0SY",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/trigger/design-agent.mjs.map": "iTMx2/RrkG8",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/trigger/generate-spec.mjs": "GhWNQeVX6Sg",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/trigger/generate-spec.mjs.map": "1cf+gvlxYXM",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/trigger/hello-world.mjs": "e19SHO6J0TI",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/trigger/hello-world.mjs.map": "J4G0hKa3ZOs",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/trigger/init.mjs": "KxLn78xgbdk",
+    "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-x5D8FE/trigger/init.mjs.map": "8C/aXVC5nXQ"
+  },
+  "outputPath": "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-WtsfdS",
+  "packageVersion": "4.4.6",
+  "runWorkerEntryPoint": "/home/ubuntu/Projects/ghoast-ai/.trigger/tmp/build-WtsfdS/node_modules/trigger.dev/dist/esm/entryPoints/dev-run-worker.mjs",
+  "runtime": "node",
+  "sources": {
+    "package.json": {
+      "contentHash": "25f1904739c0505a1467e29269b15acd",
+      "contents": "eJyNVMuO4yAQvOcrLJ+H9iPO85TDfkckAj0OGwIWECfRaP59ZYxt8tidvdlVhbu7uvDXLElSRc+YbpO0PmpqHaEi/ejgFo0VWnVMDgXkPdoY0VLX6Z25oIcsM6JxNt0mX7MkSZKUY9udUnhzSff80cOHi5B8JPq3QFlHjRup/i1QUijPoPVPAXVG1DWa7VCquSUBAo7tTlKH9qH4dKCR+v7PM14wS5JvPx3HBhVHxQRGI+6oIJafslrrWnr39nPIYT0f6u0O1CK5iMwgZX6AfQGL4GLHM4nmlHXz/raeXsEC5k/0RYSTxSo6KkWLB6nZyWZMCuz92c+hzN+LlOb4g2Tq8gcN+ZT6+l/C0PuTrDHCnmlGOW0cGtLUYfb1qyaa7ZGPtpaNodpXUMHyrabv56j1yf6gtPz0RtGiYSizg9QHz5ZQQTGyt3tnSbznEopiapf2PiwhhzLfDCiT1FrSUiOoYkjoxR21Ec4nc5/DairApL2FssWEcu1QtX29FVRQjvflwgRHEseuiMzrAtfBxRJKGLsJa1hDGTU+fqLYQAnVA0y4Pr9S9kg5U8HB2ANHhbwKxckZTT1kcRnxV0KVOFOHhFkb2q4gj69h++v9TRy+zazNGm3d8IFq2vC9wegWlPkTM00fJ7XnIh8376jBiIgOf6oOfMII0+pT1OQvS/Cxf817NODjYFFyX1PrQmoqKKMN+c79/9qTC2/w7Hv2B2iTmZg="
+    },
+    "trigger.config.ts": {
+      "contentHash": "1cefae25084f6d450ebcf0a44abb9065",
+      "contents": "eJxtUU1rwzAMvedXaD61UJJuvfm00Walg7EReiuluLVStMV2kJ1SVvLfR9K4sI+LJd7T03vIZGrHAS6gsSSLc2dLOkILJTsD4jEwHY/IqcZT5vWnSCjO10zeqPwc0Hpy9n/JvqFKZxiHfHZViSTBc79HY6maKvxwH10SgJrdBx6C7JoDep+iPaXrYrVc5sXuvXh7yefrXZE/300SAE3sJWxEmg3mYtvBRp0XDatAzkqYTacdxhiY0EvoTADQqn2FemUXeJJQqsrjpCeGYHGuX/YUApo6eAmzSUTJrsmga8LKvnoJ99OrzaD4w93IUh2CYwkPEWBltTP0hRICN0OKtiv901/ylvp2UAmbQf/rP0YxN4BxGiWIrrAV0a8dX7vtYNGOk2/Ltp+E"
+    },
+    "trigger/ai-design-generation.ts": {
+      "contentHash": "12a4fa2ebdc9c5d8db8fa027e386005c",
+      "contents": "eJyNU8Fq20AQvfsrHqIHGxQ7l/Yg6lCDSzGU2tBCDyGQRTuWt5Z21dlZJybo34u0shwnKeQipLez82beezJV7VjwBFF+n6J0RUGMBlt2FZIvwqYFppoOM6/3yWhEj90FY4V4q3LCkrwp7DeyxEqMsxt1LJ3SeBoBNbuqlgxe2NgiAn8ol5V+hrFz1QUQPPEFkAdmsvLDafIZgt1b92Bv784nX3VxedK8Y9B1kDpIN6d93ZletgR8qCrFx2GwM0nurBco85IC807XccthdIZEmSvd1VwVQ1GSjoBKPS5D/M7w6fq6xf4GCpR1A6KliMvmx++mMpLhY1vTtA8ONoPyR5tjXEf5s//5MsmwYVcZT5/fFuQG85szp2+zEW1Mz+6lvWlp7xUazNEzj7qrMUjT0hXj5KcoFmMLLFaI2+P59u8jmMS+sxl+rZfrDL8NE0Ld9qzZHYwmxpimxTTFuia7WKVYWNmxq00+gbgTJUWzZ52/p5Zd2mVHHVs/DZTVp3whV/agPLwooekwyaZUOe1cqYkzMElgC6pqOYLJh1KwdQzrHl4p8pYQyF1VlyR0UiQqMWze94/ODJG9vUt7oA/sGRjier+84CId9z39nMmHp/jaJPfxbhOD1UxG/wBGFGAg"
+    },
+    "trigger/ai-spec-generation.ts": {
+      "contentHash": "054dd6b121eaba00fa5bc2c993588375",
+      "contents": "eJyFUsFq20AQvesrHjrZoNiBQg+iCW0JlECKTdM0h9LDenciby3tqLMrJybo38uuHMUmpt2DWD1m35s3b2zTsgQ8Iyi/KVBzVZGgx4Nwg/xjEBuBmaHt3JtNnmX0lB5YF0gelCbctqS/kCNRwbJbql3NyuA5A1rh36TDtSnhg1hXZYBvSR8BnSc5Ahwb8iU6t3H86H7+ygAy1THU/7ePRRfaLqQ2GiUbw4/uQGNV8+pO6hF55dPsfICyx2y4SPOZRDprSuTKnkUnZ9VYkhdJ6umqG/5LvD8/j9ifjjoqUyeI9LoTIad3N7axocS7WNPHj3SuhPI7pzFphzGWp6c7LbEUbqynD6dcX+Li8lXPx3THKIp9AsV+8MUw72KYMXpcYK+dJYJhIWY1V5P8NigJ1lX4dJ1YcOj+XyLopwPbfI7vi6tFiXsrhK6NTK3w1hoSBI7tbkkCwppQiWrXMV+Gwtd9hgik185qVSeJ2QvrksRbPzxsxlrGDxJNNT7XvIJyBj6wUKq6+3YDdumavAhpFjN76/qtWWhu2poCnXY9uhUKnbh9Eod7mKdliWdcxBeoH7ahn2Z/ATyeMIY="
+    },
+    "trigger/design-agent.ts": {
+      "contentHash": "385853d8212ce0b4139c9862626452a0",
+      "contents": "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"
+    },
+    "trigger/generate-spec.ts": {
+      "contentHash": "257141606769f06e9a1f7eefbfed270f",
+      "contents": "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"
+    },
+    "trigger/hello-world.ts": {
+      "contentHash": "0afd2437c928cf4dd5900b71cf259d50",
+      "contents": "eJwtzsFqAyEQBuC7T/FHctgFu7kLKT32AQq5RuLUyroaRpM2iO9elL3OP/8347d74oKKYvKqEJJzxGj45rRBfhT2fbBYep6yXaUQ9DcKtxRzwQ+FkC6Jg/0yecV5KFMVgLcacsRvvz2XSgD8iBomv+IN0928QjJWo2KjnI0jjVzYR4c24/yOrmB/aAnJTfKzcxjcONS96KM7SIWKHUSbR5GpPDiiwjFR8dFpXAegcKz77rJfbocrmgCaEm0W/105W5w="
+    },
+    "tsconfig.json": {
+      "contentHash": "02fc19ad21338c2ab820a70136310db4",
+      "contents": "eJxtUU1Lw0AQvedXLHMMbaJehJ4E6cFiEfRYimyyQ7t2v9id1EjJf5fdJNVET8O892b2vdlLxhjUVjup0L84ktYEWLFLxhhjQNwfkGDFYP12d3N7D4seV7KCFduBsBoWLJZCEnpeKYw9BoMtwX5Qc6Xs5yauJd/gAIaTdM+yejxifZox5GVNU8zYtZYzDMPWikbhkyH01k1JnajofDAzwV8xWNXEsFFRNUYo9KPER/KMm2DNdtzya7MMVnFC0XOzVB+hjRs98pqWsRmHTO1RoyGupgNONQeZTr5LABtO36fmOkVIAQa4S3U8reN0/PkvxuChzNPPFGUO+2wc6KI8mlCNwOtbae8SzbkQBYXRap6X+d/2mqSIQyV9OQzlTNpTAs//06nVFGKS5B+wvRoCYwW+6+Gm+6zLvgEbXbUJ"
+    }
+  },
+  "target": "dev"
+}

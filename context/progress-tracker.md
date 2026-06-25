@@ -4,17 +4,69 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Phase
 
-- (none — ready for next feature)
+- Spec UI integration (29-spec-ui-integration.md)
 
 ## Current Goal
 
-- (none — completed canvas autosave feature)
+- Integrate spec generation into the editor: spec list, preview modal, download from UI
 
 ## In Progress
 
 - (none)
 
 ## Completed
+
+- Spec UI integration (29-spec-ui-integration.md) ✓
+  - `app/api/projects/[projectId]/specs/route.ts` — `GET` route: authenticates user, verifies project access, returns specs list ordered by createdAt desc
+  - `components/editor/ai-sidebar.tsx` — Specs tab replaced mock with real spec list fetched from backend; each item shows formatted date, clock icon, click to preview, download button; preview modal (`Dialog`) fetches Markdown content via download endpoint and renders with `react-markdown` + `@tailwindcss/typography` prose styles; modal has close and download actions; keyboard support via Dialog
+  - `react-markdown` installed for rendering; `@tailwindcss/typography` installed for prose styling
+  - Zero TS errors, build passes
+
+- Spec persistence and download (28-spec-persistence-download.md) ✓
+  - `prisma/models/project-spec.prisma` — `ProjectSpec` model with `id`, `projectId` (relation to Project via `specs` on Project), `filePath`, `createdAt`; migration created and applied
+  - `trigger/generate-spec.ts` — After generation: uploads Markdown to Vercel Blob at `specs/{projectId}/{roomId}.md` with `access: "private"`, creates `ProjectSpec` record with the Blob URL; returns `{ spec, blobUrl, specId }`; follows same metadata + Blob pattern as canvas persistence
+  - `app/api/projects/[projectId]/specs/[specId]/download/route.ts` — `GET` route: authenticates user, verifies project access (owner/collaborator), verifies spec belongs to project, fetches content from Vercel Blob via `get()`, returns as Markdown attachment with `Content-Disposition: attachment`
+  - Zero TS errors, build passes
+
+- Spec generation flow (27-spec-generation-flow.md) ✓
+
+- AI chat functional (26-ai-chat-functional.md) ✓
+  - `app/api/ai/design/route.ts` — Returns `publicToken` from `auth.createPublicToken` with read scope on the specific run alongside `runId`; imported `auth as triggerAuth` from `@trigger.dev/sdk`
+  - `components/editor/ai-sidebar.tsx` — On submit: pushes user message to `ai-chat` feed, calls `POST /api/ai/design` with `{ prompt, roomId, projectId }`, reads `{ runId, publicToken }` from response; stores both in local state
+  - Uses `useRealtimeRun(runId, { accessToken: publicToken, enabled, onComplete })` to track run status in real time
+  - `onComplete` callback pushes a final AI message on success or error message on failure, then resets run state
+  - Input and send button disabled while run is active; button shows `Loader2` spinner during run
+  - Status strip above input: dark base + green accent pulsing dot, shows latest `aiStatusFeed` message, only visible during active runs
+  - Chat bubbles styled per spec: user messages green (`#62C073`) with dark text, AI messages dark elevated bg with light text
+  - Errors shown as AI assistant messages in `ai-chat` feed instead of inline error state
+  - Replaced `sendMessage` with generalized `addChatMessage(name, role)` mutation supporting both user and assistant roles
+  - Removed inline `isGenerating`/`latestStatus` blocks in chat body (replaced by status strip)
+  - Removed unused `error` state, `CheckCircle`, `AlertCircle` imports
+  - Zero TS errors, build passes
+
+- Sidebar chat feed (25-sidebar-chat-feed.md) ✓
+
+- AI presence state (24-ai-presence-state.md) ✓
+  - `types/tasks.ts` — Created `AiStatusPayload` type with `message`, `step`, `timestamp`, and optional `text` fields for feed message validation
+  - `liveblocks.config.ts` — Added `aiStatusFeed: LiveList<LiveObject<...>>` to Storage type, imported `LiveList`/`LiveObject` from `@liveblocks/client`
+  - `components/editor/ai-sidebar.tsx` — Replaced `useEventListener` based status array with `useStorage` reading from shared `aiStatusFeed`; derived `isGenerating` from latest feed item's step (shared across all room participants); chat input and send button disabled while `isGenerating`; send button shows `Loader2` spinner during generation; local `isLoading` set on submit, cleared when feed shows terminal step via `useEffect`; removed unused `StatusMessage` interface and `statusFeed` state
+  - `components/editor/live-cursors.tsx` — Imported `Loader2` from lucide-react; reads `isThinking` from presence; renders inline spinner in cursor name badge when `isThinking` is true
+  - `workspace-content.tsx` — Added `initialStorage` to `RoomProvider` with empty `aiStatusFeed` LiveList; imported `LiveList`/`LiveObject` from `@liveblocks/client`
+  - `trigger/design-agent.ts` — Replaced fire-and-forget `broadcast()` with async `pushStatus()` that writes to `aiStatusFeed` storage via `liveblocks.mutateStorage` AND broadcasts event for real-time listeners; added `userId` to task payload; calls `liveblocks.setPresence` to set `isThinking: true/false` per user during generation; imported `LiveList`, `LiveObject` from `@liveblocks/node`
+  - `app/api/ai/design/route.ts` — Passes `userId` from Clerk auth to the design agent task payload
+  - Build verified: zero TS errors
+
+- Design agent AI logic (23-design-agent-logic.md) ✓
+  - `trigger/design-agent.ts` — Full AI agent: reads canvas state via Liveblocks `getStorageDocument`, interprets prompts with Gemini (`@ai-sdk/google`), generates structured actions (add/move/resize/update/delete nodes, add/delete edges), applies changes via `mutateFlow` from `@liveblocks/react-flow/node`, broadcasts real-time status events (`liveblocks.broadcastEvent`) at each step (start → processing → complete/error)
+  - Supported actions: add-node, move-node, resize-node, update-node, delete-node, add-edge, delete-edge
+  - Design rules enforced: 6 node shapes, 8-color palette, clamp positioning/sizing, valid color/shape filtering
+  - Canvas context sent to Gemini (existing node/edge counts) for smarter generations
+  - Errors caught gracefully with error event broadcast and task failure
+  - `liveblocks.config.ts` — RoomEvent typed as `{ type, message, step, timestamp }` for `useEventListener`
+  - `components/editor/ai-sidebar.tsx` — wired `handleSubmit` to `POST /api/ai/design`, added `useEventListener` for real-time AI status feed (loading spinner, message bubbles with step icons), starter prompt chips now populate input on click
+  - No canvas architecture changes, no new state system outside Liveblocks
+
+- Design agent API (22-design-agent-api.md) ✓
 
 - Canvas autosave (21-canvas-autosave.md) ✓
   - `@vercel/blob` installed
@@ -186,6 +238,24 @@ Update this file whenever the current phase, active feature, or implementation s
 ## Open Questions
 
 
+
+## In Progress
+
+- (none)
+
+## Completed
+
+- Trigger.dev integration (trigger.dev-setup.md) ✓
+  - `@trigger.dev/sdk` v4.4.6, `@trigger.dev/build`, `@trigger.dev/react-hooks` installed
+  - `trigger.config.ts` — project config with `modern` Prisma extension mode (compatible with Prisma 7 `prisma-client` provider)
+  - `trigger/init.ts` — global `onStartAttempt`, `onSuccess`, `onFailure` lifecycle hooks
+  - `trigger/hello-world.ts` — example task for verifying setup
+  - `trigger/ai-design-generation.ts` — placeholder task for AI architecture generation (TODO: wire AI provider)
+  - `trigger/ai-spec-generation.ts` — placeholder task for AI spec generation (TODO: wire AI provider)
+  - `package.json` — `trigger:dev` and `trigger:deploy` scripts added
+  - `.env.local` — `TRIGGER_SECRET_KEY` and `TRIGGER_PROJECT_REF` placeholder entries added
+  - Build verified: zero TS errors
+  - `.pnp.cjs` — shadow file at project root to prevent esbuild from loading the global Yarn PnP manifest at `~/.pnp.cjs`, which blocked `@trigger.dev/core` resolution for the trigger.dev CLI worker
 
 ## Architecture Decisions
 

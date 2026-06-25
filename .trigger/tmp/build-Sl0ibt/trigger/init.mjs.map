@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../trigger/init.ts"],
+  "sourcesContent": ["import { tasks } from \"@trigger.dev/sdk\"\n\ntasks.onStartAttempt(({ ctx, task }) => {\n  console.log(`Run ${ctx.run.id} started on task ${task}`)\n})\n\ntasks.onSuccess(({ ctx, task }) => {\n  console.log(`Run ${ctx.run.id} succeeded on task ${task}`)\n})\n\ntasks.onFailure(({ ctx, task, error }) => {\n  console.error(`Run ${ctx.run.id} failed on task ${task}:`, error)\n})\n"],
+  "mappings": ";;;;;;;;;;;;AAAA;AAEA,MAAM,eAAe,CAAC,EAAE,KAAK,KAAK,MAAM;AACtC,UAAQ,IAAI,OAAO,IAAI,IAAI,EAAE,oBAAoB,IAAI,EAAE;AACzD,CAAC;AAED,MAAM,UAAU,CAAC,EAAE,KAAK,KAAK,MAAM;AACjC,UAAQ,IAAI,OAAO,IAAI,IAAI,EAAE,sBAAsB,IAAI,EAAE;AAC3D,CAAC;AAED,MAAM,UAAU,CAAC,EAAE,KAAK,MAAM,MAAM,MAAM;AACxC,UAAQ,MAAM,OAAO,IAAI,IAAI,EAAE,mBAAmB,IAAI,KAAK,KAAK;AAClE,CAAC;",
+  "names": []
+}

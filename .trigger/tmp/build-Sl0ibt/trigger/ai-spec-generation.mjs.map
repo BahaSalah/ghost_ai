@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../trigger/ai-spec-generation.ts"],
+  "sourcesContent": ["import { task, logger } from \"@trigger.dev/sdk\"\n\nexport interface SpecGenerationPayload {\n  projectId: string\n  specId: string\n  userId: string\n  nodes: unknown[]\n  edges: unknown[]\n}\n\nexport interface SpecGenerationOutput {\n  markdown: string\n  blobUrl: string\n}\n\nexport const aiSpecGeneration = task({\n  id: \"ai-spec-generation\",\n  maxDuration: 600,\n  queue: {\n    concurrencyLimit: 3,\n  },\n  run: async (payload: SpecGenerationPayload): Promise<SpecGenerationOutput> => {\n    const { projectId, specId, userId, nodes, edges } = payload\n\n    logger.log(\"Starting AI spec generation\", { projectId, specId, userId })\n\n    // TODO: Wire up AI provider to convert the graph into a Markdown technical spec.\n    // Persist the markdown to Vercel Blob and store the URL on the spec record.\n\n    logger.log(\"AI spec generation complete\", { projectId, specId })\n\n    return {\n      markdown: \"\",\n      blobUrl: \"\",\n    }\n  },\n})\n"],
+  "mappings": ";;;;;;;;;;;;;;;AAAA;AAeO,IAAM,mBAAmB,KAAK;AAAA,EACnC,IAAI;AAAA,EACJ,aAAa;AAAA,EACb,OAAO;AAAA,IACL,kBAAkB;AAAA,EACpB;AAAA,EACA,KAAK,8BAAO,YAAkE;AAC5E,UAAM,EAAE,WAAW,QAAQ,QAAQ,OAAO,MAAM,IAAI;AAEpD,WAAO,IAAI,+BAA+B,EAAE,WAAW,QAAQ,OAAO,CAAC;AAKvE,WAAO,IAAI,+BAA+B,EAAE,WAAW,OAAO,CAAC;AAE/D,WAAO;AAAA,MACL,UAAU;AAAA,MACV,SAAS;AAAA,IACX;AAAA,EACF,GAdK;AAeP,CAAC;",
+  "names": []
+}
